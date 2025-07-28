@@ -9,3 +9,9 @@ dropdb:
 	#kill the active session then drop the db
 	docker exec -it postgres-bank psql -U postgres -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'simple_bank';"
 	docker exec -it postgres-bank dropdb -U postgres simple_bank
+
+migrateup:
+	migrate -path db/migration/ -database "postgresql://postgres:postgres@localhost:5432/simple_bank?sslmode=disable" -verbose up
+
+migratedown:
+	migrate -path db/migration/ -database "postgresql://postgres:postgres@localhost:5432/simple_bank?sslmode=disable" -verbose down
