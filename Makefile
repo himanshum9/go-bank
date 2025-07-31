@@ -1,4 +1,4 @@
-.PHONY: createdb postgres dropdb
+.PHONY: createdb postgres dropdb sqlc
 postgres:
 	docker run --name postgres-bank -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres:17
 
@@ -15,3 +15,6 @@ migrateup:
 
 migratedown:
 	migrate -path db/migration/ -database "postgresql://postgres:postgres@localhost:5432/simple_bank?sslmode=disable" -verbose down
+
+sqlc:
+	sqlc generate
